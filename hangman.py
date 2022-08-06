@@ -1,4 +1,7 @@
 import random
+from nltk.corpus import words
+giant_word_list = words.words()
+print(len(giant_word_list))
 
 HANGMANPICS = ['''
 
@@ -166,12 +169,14 @@ print("Hangman Game")
 
 missed_letters = ""
 correct_letters = ""
-secret_word = get_random_word(words)
+secret_word = get_random_word(giant_word_list)
 game_is_done = False
+
+points = 0
 
 while True:
     display_board(HANGMANPICS, missed_letters, correct_letters, secret_word)
-
+    print ("Words Guessed: " + str(points))
     guess = get_guess(missed_letters + correct_letters)
 
     if guess in secret_word:
@@ -184,6 +189,7 @@ while True:
                 break
         if found_all_letters:
             print("You have won!!! The secret word is " + secret_word)
+            points = points + 1
             game_is_done = True
     else:
         missed_letters = missed_letters + guess
@@ -198,6 +204,6 @@ while True:
             missed_letters = ""
             correct_letters = ""
             game_is_done = False
-            secret_word = get_random_word(words)
+            secret_word = get_random_word(giant_word_list)
         else:
             break
